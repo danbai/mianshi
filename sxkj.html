@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>doctype,对象排序</title>
+</head>
+<body>
+    <script>
+        /*
+        1.doctype
+        <!DOCTYPE html> Document Type,文档类型,用来指定页面使用的xhtml(或者html)版本.
+        XHTML1.0 HTML
+        2.公钥和私钥
+        Https就是Http跑在SSL或者TLS上.
+        客户端验证服务端,服务端也可以给客户端颁发证书并验证客户端.
+        */
+        // 对象排序
+        var o = {
+            a: 1,
+            d: 3,
+            b: 5,
+            e: 2,
+            c: 4,
+        };
+
+        // 按照key值排序
+        function sortObjKey(o) {
+            var keys = Object.keys(o).sort(),   // 对原对象的key进行排序,新对象就可以取到原对象的值
+                p = {},
+                key;
+
+            for (var i = 0; i < keys.length; i++) {
+                key = keys[i];
+
+                p[key] = o[key];
+            }
+
+            return p;
+        }
+        console.log(sortObjKey(o));
+
+        //按照value值排序
+        function sortObjVal(o) {
+            var keys = Object.keys(o).sort(function(a, b) { // 对原对象的key进行排序,一句o[key]的值
+                return o[a] - o[b];
+            });
+
+            var p = {},
+                key;
+
+            for (var i = 0; i < keys.length; i++) {
+                key = keys[i];
+
+                p[key] = o[key];
+            }
+
+            return p;
+        }
+        console.log(sortObjVal(o));
+    </script>
+</body>
+</html>

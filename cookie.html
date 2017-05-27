@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>cookie,sessionStorage,localStorage</title>
+</head>
+<body>
+    <script>
+    /*
+    都是存储在本地终端上的数据,
+    1.cookie
+    可设置失效时间,默认是关闭浏览器后失效,4k左右,每次都会携带在HTTP头中,
+    如果使用cookie保存过多数据会带来性能问题.
+    */
+    function setCookie(c_name, value, expiresDay) {
+        var exdate = new Date();
+        exdate.setDate(exdate.getDate() + parseInt(expiresDay));
+        document.cookie = c_name + '=' + value + (expiresDay == null ? '' : ('; expires=' + exdate.toGMTString()));
+    }
+
+    //setCookie('name2', 'danbai2');
+
+    function getCookie(c_name) {
+        var cookie = document.cookie,
+            cookieArray = cookie.split(/;\s?/g),
+            getCookie = '',
+            getCookieArray;
+
+        for (var i = 0; i < cookieArray.length; i++) {
+            getCookie = cookieArray[i];
+            getCookieArray = getCookie.split('=');
+            if (c_name === getCookieArray[0]) {
+                return getCookieArray[1];
+            }
+        }
+
+        return 'no cookie';
+    }
+
+    console.log(getCookie('name2'));
+    console.log(getCookie('name3'));
+
+    function removeCookie(c_name) {
+        setCookie(c_name, 'aaa', -1);
+    }
+    removeCookie('name');
+    /*
+    2.localStorage
+    除非被清除,否则永久保存,一般为5MB,仅在客户端中存储,不参与与服务器的通信.
+    */
+    /*
+    3.sessionStorage
+    仅在当前会话下有效,关闭页面或浏览器后清除.
+    */
+    localStorage.setItem('a', 1);
+    localStorage.setItem('b', 2);
+    console.log(localStorage.getItem('a'));
+    console.log(localStorage.getItem('b'));
+    localStorage.removeItem('a');
+    console.log(localStorage.getItem('a'));
+    console.log(localStorage.getItem('b'));
+    console.log(localStorage);
+    for (var i in localStorage) {
+        console.log(i + ': ' + localStorage.getItem(i));
+    }
+
+    if (localStorage.getItem('page')) {
+        localStorage.setItem('page', parseInt(localStorage.getItem('page')) + 1); 
+    } else {
+        localStorage.setItem('page', 1);
+    }
+    console.log('您已阅读本页' + localStorage.getItem('page') + '次');
+    </script>
+</body>
+</html>
