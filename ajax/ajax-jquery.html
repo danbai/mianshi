@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script src="jquery.js"></script>
+    <script>
+        $(function() {
+            $.ajax({
+                url: 'data2.js',
+                type: 'GET',
+                // JSONP格式,使用JSONP形式调用函数时,如'myurl?callback=?',jQuery将自动替换?为正确的函数名,以执行回调函数
+                dataType: 'jsonp',
+                // 在一个jsonp请求中重写回调函数的名字,这个值用来替代在'callback?'这种GET或POST请求中URL参数里
+                // 的'callback'部分,比如{jsonp:'onJsonPload'}会将'onJsonPLoad=?'传给服务器.
+                jsonp: 'callback',
+                // 为jsonp请求指定一个回调函数名,这个值将用来替代jQuery自动生成的随机函数名.
+                jsonpCallback: 'handleRes',
+                error: function(request, err) {
+                    console.log(err);
+                },
+                success: function(res) {
+                    console.log(res);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

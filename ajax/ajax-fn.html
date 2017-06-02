@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function getAjax(url, timeout, callback) {
+            var request = new XMLHttpRequest();
+            var timedout = false;
+            var timer = setTimeout(function() {
+                timedout = true;
+                request.abort();
+            }, timeout);
+            request.open('GET', url);
+            request.onreadystatechange = function() {
+                if (timedout) {
+                    return;
+                }
+                if (request.readyState === 4 && request.status === 200) {
+                    var type = request.getResponseHeader('Content-Type');
+
+                    if (type.indexOf('xml') === -1 && request.responseXML) {
+                        callback(request.responseXML);
+                    } else if (type === 'application/json') {
+                        callback(JSON.parse(request.responseText));
+                    } else {
+                        callback(request.responseText);
+                    }
+                }
+            }
+            request.send(null);
+        }
+
+        /* getAjax('data.json', 1000, function(res) {
+            for (var i in res) {
+                console.log(i + ':' + res[i]);
+            }
+        }); */
+
+        getAjax('http://192.168.124.132', 1000, function(res) {
+            console.log(res);
+        });
+
+        /* getAjax('../../danbai.github.io/data.json', 1000, function(res) {
+            console.log(res);
+        }); */
+
+        getAjax('https://danbai.github.io/data.json', 10000, function(res) {
+            console.log(res);
+        });
+
+        // CORS,跨域资源共享,CORS需要浏览器和服务器同时支持,目前,所有浏览器都支持该功能.
+        // XHR2,对跨域访问提供了很好的支持,并且还有一些新的功能.
+        //IE10,只需要在服务器端头部加上:header('Access-Control-Allow-Origin');
+        // header('Access-Control-Allow-Methods:POST,GET');
+
+        var supportsCORS = (new XMLHttpRequest()).withCredentials !== undefined;
+        console.log(supportsCORS);
+    </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 根据指定的URL发送一个JSONP请求
+        // 然后把解析得到的响应数据传递给回调函数
+        // 在URL中添加一个名为jsonp的查询参数,用于指定该请求的回调函数的名称
+        function getJSONP(url, callback) {
+            var script = document.createElement('script');
+            getJSONP.cb0 = function(res) {
+                callback(res);
+            }
+            script.src = url;
+            document.body.appendChild(script);
+        }
+
+        getJSONP('data2.js', function(res) {
+            console.log(res);
+        });
+    </script>
+</body>
+</html>

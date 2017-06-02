@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>XMLHttpRequest</title>
+    </head>
+    <body>
+        <script>
+            if (window.XMLHttpRequest === undefined) {
+                window.XMLHttpRequest = function() {
+                    try {
+                        return new ActiveXObject('Msxml2.XMLHTTP6.0');
+                    } catch (e1) {
+                        try {
+                            return new ActiveXObject('Msxml2.XMLHTTP.3.0');
+                        } catch (e2) {
+                            throw new Error('XMLHttpRequest is not supported');
+                        }
+                    }
+                }
+            }
+
+            // 实例化XMLHttpRequest对象
+            var request = new XMLHttpRequest();
+            // 调用open()
+            request.open('GET', 'data.json');
+            // 请求头
+            request.setRequestHeader('Content-type', 'text/plain;charset=UTF-8');
+            // 指定可选的请求主体并向服务器发送它
+            request.send('11');
+        </script>
+    </body>
+</html>
