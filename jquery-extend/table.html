@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>2</td>
+            <td>2</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>3</td>
+            <td>3</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>4</td>
+            <td>4</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+        </tr>
+    </table>
+    <script src="jquery.js"></script>
+    <script src='jquery-extend-highLight.js'></script>
+    <script src="jquery-extend-highLight2.js"></script>
+    <script>
+        $.highLight($('table'));
+        $('table').highLight2();
+        $('table').css2('color', '#0f0');
+    </script>
+</body>
+</html>
