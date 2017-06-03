@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        console.log([] instanceof Array);
+
+        function F() {}
+
+        F.prototype = {
+            constructor: F
+        };
+
+        console.log(F.prototype.constructor);
+        console.log(new F().constructor);
+
+        function typeAndValue(x) {
+            if (x == null) {
+                return '';
+            }
+
+            switch (x.constructor) {
+                case Number:
+                    return 'Number: ' + x;
+                case String:
+                    return 'String: ' + x;
+                case Date:
+                    return 'Date: ' + x;
+                case RegExp:
+                    return 'RegExp: ' + x;
+                case Complex:
+                    return 'Complex: ' + x;
+            }
+        }
+    </script>
+</body>
+</html>

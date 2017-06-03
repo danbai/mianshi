@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function Range() {
+
+        }
+
+        var p = Range.prototype;    // 原型对象
+        var c = p.constructor;  // 这是与原型相关联的函数
+
+        console.log(p === c);   // true    Range.prototype.constructor = Range
+
+        // Range类使用它自身的一个新对象重写预定义的Range.prototype对象.
+        // 这个新定义的原型对象不含有constructor属性,因此Range类的实例也不含有constructor属性.
+        // 构造函数: Fun   原型对象:Fun.prototype   实例对象: new Fun(),继承Fun.prototype  Fun.prototype.constructor = Fun
+        
+    </script>
+</body>
+</html>

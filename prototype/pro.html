@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+        1.
+        */
+        function fun(a, b) {    // fun:类
+            this.a = a;
+            this.b = b;
+        }
+
+        fun.prototype = {
+            add: function() {
+                return this.a + this.b;
+            },
+            sub: function() {
+                return this.a - this.b;
+            },
+            x: 1
+        }
+
+        var oo = new Object();
+        var aa = new Array();
+        console.log(Object.prototype);
+        console.log(Array.prototype);
+        console.log(fun.prototype);
+        var o = new fun(1, 2);  // 同一个类的实例
+        var p = new fun(3, 4);
+        console.log(o);
+        console.log(p);
+        console.log(o.add());
+        console.log(p.sub());
+
+        // 通过原型继承创建一个新对象
+        // inherit()返回了一个继承自原型对象p的属性的对象
+        function inherit(p) {
+            if (p === null) {
+                throw TypeError();
+            }
+
+            var t = typeof p;
+
+            if (t !== 'object' && t !== 'function') {
+                throw TypeError();
+            }
+
+            function f() {};
+            f.prototype = p;
+            return new f();
+        }
+
+        var pp = {
+            x: 1
+        };
+        var ooo = inherit(pp);
+        console.log(ooo);
+    </script>
+</body>
+</html>

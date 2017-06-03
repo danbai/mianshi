@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 定义一个扩展函数,用来将第二个以及后续参数复制至第一个参数
+        // 如果o的属性拥有一个不可枚举的同名属性,则for/in循环
+        // 不会枚举对象o的可枚举属性,也就是说,将不会正确处理诸如toString的属性
+        // 除非我们显示检测它
+        var a = 1;
+
+        var extend = (function() {
+            console.log(a); // 1
+            a = 2;
+            console.log(a); // 2
+            return function(o, p) {
+                for (var i in p) {
+                    o[i] = p[i];
+                }
+
+                return o;
+            }
+        }());
+
+        a = 3;
+
+        var o = extend({x: 1}, {y: 2});
+        console.log(o);
+
+        // 一个用以定义简单类的函数
+        function defineClass(constructor, methods, statics) {
+            if (methods) {
+                extend(constructor.prototype, methods);
+            }
+            if (statics) {
+                extend(constructor, statics);
+            }
+
+            return constructor;
+        }
+
+        // 这是Range类的另一个实现
+        var SimpleRange = defineClass(
+            function f(from, to) {
+                this.from = from;
+                this.to = to;
+            },
+            {
+                includes: function(x) {
+                    return x >= this.from && x <= this.to;
+                },
+                toString: function() {
+                    return '(' + this.from + '...' + this.to + ')';
+                }
+            },
+            {
+                upto: function(t) {
+                    return new SimpleRange(o, t);
+                }
+            }
+        );
+        console.log(SimpleRange);
+        var o = new SimpleRange(1, 3);
+        console.log(o.toString());
+        console.log(o.upto);    // undefined
+        console.log(SimpleRange.upto);  // function
+    </script>
+</body>
+</html>
+
+

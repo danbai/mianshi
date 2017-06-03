@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 我们可以通过给原型对象添加新方法来扩充js类
+        // js内置类的原型对象也是一样如此开放,也就是说可以给数字,字符串,数组,函数等数据类型添加方法.
+        // 数字添加times方法
+        Number.prototype.times = function(f) {
+            var n = Number(this);
+
+            for (var i = 0; i < n; i++) {
+                f(i);
+            }
+        }
+
+        var n = 3;
+
+        n.times(function(n) {
+            console.log(n + ' hello');
+        })
+
+        Number.prototype.times2 = function(f, context) {
+            var n = Number(this);
+
+            for (var i = 0; i < n; i++) {
+                f.call(context, i);
+            }
+        }
+
+        var m = 4;
+        m.times2(function(n) {
+            console.log(n + ' hello');
+        });
+
+        if (!String.prototype.trim) {
+            String.prototype.trim = function() {
+                if (!this) {
+                    return this;
+                }
+
+                return this.replace(/^\s+|\s+$/g, '');
+            }
+        }
+
+        function fun() {};
+
+        Function.prototype.getName = function() {
+            return this.name || this.toString().match(/function\s*([^()*]\(/)[1];
+        }
+    </script>
+</body>
+</html>

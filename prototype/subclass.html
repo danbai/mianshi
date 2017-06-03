@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 在面向对象编程中,类B可以继承自另外一个类A,我们将A称为父类,将B称为子类.
+        // B的实例从A继承了所有的实例方法.
+
+        function inherit(o) {
+            if (o == null) {
+                throw TypeError();
+            }
+
+            if (Object.create) {
+                return Object.create(o)
+            }
+
+            function F() {}
+            F.prototype = o;
+            return new F();
+        }
+
+        function extend(o, p) {
+            for (var i in p) {
+                o[i] = p[i];
+            }
+
+            return o;
+        }
+
+        function B(a, b) {
+            this.a = a;
+            this.b = b;
+        }
+
+        B.prototype = {
+            constructor: B,
+            add: function() {
+                return this.a + this.b;
+            }
+        };
+
+        function A(a, b) {
+            this.a = a * a;
+            this.b = b * b;
+        }
+
+        A.prototype = inherit(B.prototype);
+        A.prototype.constructor = A;
+
+        extend(A.prototype, {
+            constructor: A,
+            sub: function() {
+                return this.a - this.b;
+            },
+            add: function() {
+                return B.prototype.add.apply(B, arguments)
+            }
+        });
+
+        var o = new A(1, 2);
+        console.log(o);
+        console.log(o.add(1, 2, 3, 4));
+        console.log(o.sub());
+    </script>
+</body>
+</html>
