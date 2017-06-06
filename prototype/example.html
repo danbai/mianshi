@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function Range(from, to) {  // 构造函数,类
+            this.from = from;   // 实例对象私有属性
+            this.to = to;
+        }
+
+        Range.prototype = { // 原型对象,构造函数的prototype属性,可被实例对象继承
+            constructor: Range,
+            includes: function(x) {
+                return x >= this.from && x <= this.to;
+            },
+            toString: function() {
+                return '(' + this.from + '...' + this.to + ')';
+            }
+        };
+
+        var o = new Range(1, 3);
+        console.log(Range.prototype.constructor);
+        console.log(o.constructor); // 实例对象的constructor属性即构造函数
+        console.log(o.includes(2));
+        console.log(o.toString());
+
+        function RangeSub(from, to) {
+            this.from = from * from;
+            this.to = to * to;
+        }
+
+        RangeSub.prototype = Range.prototype;
+        RangeSub.prototype.constrcutror = RangeSub;
+
+        var p = new RangeSub(1, 3);
+        console.log(p.toString());
+    </script>
+</body>
+</html>

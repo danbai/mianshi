@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function MyArray() {
+            Array.apply(this, arguments);
+        }
+
+        MyArray.prototype = Object.create(Array.prototype, {
+            constructor: {
+                value: MyArray,
+                writable: true,
+                configurable: true,
+                enumerable: true
+            }
+        });
+
+        class MyArray2 extends Array {
+            constructor(...args) {
+                super(...args); // 调用Array类的constructor
+            }
+        }
+    </script>
+</body>
+</html>

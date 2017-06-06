@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        class Range {
+            constructor(from, to) {
+                this.from = from;
+                this.to = to; 
+            }
+            includes(x) {
+                return x >= this.from && x <= this.to;
+            }
+            toString() {
+                return '(' + this.from + '...' + this.to + ')';
+            }
+        };
+
+        var o = new Range(1, 3);
+        console.log(o.constructor);
+        console.log(o.includes(2));
+        console.log(o.toString());
+
+        // Class的继承
+        class RangeSub extends Range {
+            constructor(x, y, z) {
+                super(x, y);
+                this.z = z;
+            }
+            toString() {
+                return this.z + super.toString();
+            }
+        }
+        var p = new RangeSub(2, 4, 5);
+        console.log(p.constructor); // RangeSub
+        console.log(p.includes(3));
+        console.log(p.toString());
+        console.log(p instanceof Range);
+        console.log(p instanceof RangeSub);
+
+        console.log(Range.prototype);
+        console.log(p.__proto__);   // Range,子类的__proto__属性表示构造函数的继承,总是指向父类
+
+        console.log(RangeSub.__proto__ === Range);  // true
+        console.log(RangeSub.prototype.__proto__ === Range.prototype);  // true
+    </script>
+</body>
+</html>

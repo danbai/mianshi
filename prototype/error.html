@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /* class ExtendableError extends Error {
+            constructor(message) {
+                super();
+                this.message = message;
+                this.stack = (new Error()).stack;
+                this.name = this.coustructor.name;
+            }
+        }
+
+        class MyError extends ExtendableError {
+            constructor(m) {
+                super(m);
+            }
+        }
+
+        var myerror = new MyError('ll'); */
+
+        class Foo {
+            static classMethod() {
+                return 'hello';
+            }
+        }
+        var o = new Foo();
+        // console.log(o.classMethod()); // 报错
+        console.log(Foo.classMethod());
+
+        class Bar extends Foo {
+            constructor() {
+                super();
+            }
+            static fun() {
+                return super.classMethod();
+            }
+        }
+
+        console.log(Bar.classMethod());
+        var p = new Bar();
+        // console.log(p.fun());
+        console.log(Bar.fun());
+    </script>
+</body>
+</html>

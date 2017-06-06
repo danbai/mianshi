@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 数组合并
+        var more = [3, 4];
+        console.log([1, 2].concat(more));
+        console.log([1, 2, ...more]);
+
+        //解构赋值
+        const [x, y] = [1, 2];
+        console.log(x);
+        console.log(y);
+
+        const [first, ...rest] = [1, 2, 3, 4, 5];
+        console.log(first);
+        console.log(rest);
+
+        //函数的返回值
+        /* var dataFields = readDateFields(database);
+        var d = new Date(...dataFields); */
+
+        // 字符串
+        var s = 'hello';
+        console.log([...s]);    // ['h', 'e', 'l', 'l', 'o']
+    </script>
+</body>
+</html>

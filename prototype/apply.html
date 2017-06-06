@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function f(x, y, z) {
+            return x + y + z;
+        }
+        var args = [1, 2, 3];
+        console.log(f.apply(null, args));   // apply为数组传入,解析为参数
+
+        function f2(x, y, z) {  // 分隔运算符
+            return x + y + z;
+        }
+        console.log(f2(...args));   // 数组传入,分隔运算符将一个数组转为用逗号分隔的序列参数
+
+        function f3(...args) {  // rest参数,传入的参数序列,表示一个数组
+            return args[0] + args[1] + args[2];
+        }
+        console.log(f3(1, 2, 3));
+
+        // 求数组最大元素
+        var a = [2, 3, 5, 4, 1];
+        console.log(a.sort()[a.length - 1]);    // 5
+
+        console.log(Math.max.apply(Math, a));   // 5
+        console.log(Math.max(...a));    // 5
+        console.log(Math.max(2, 3, 5, 4, 1));
+
+        // push一个数组
+        var arr1 = [0, 1, 2];
+        var arr2 = [3, 4, 5];
+        Array.prototype.push.apply(arr1, arr2);
+        console.log(arr1);
+
+        arr1.push(...arr2);
+        console.log(arr1);
+    </script>
+</body>
+</html>

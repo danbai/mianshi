@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function f(v) {
+            return v;
+        }
+
+        var f = v => v;
+
+        var f = (x, y) => x + y;
+
+        const isEve = n => n % 2 === 0;
+        const square = n => n * n;
+
+        var a = [1, 2, 3].map(x => x * x);
+        console.log(a);
+
+        var result = [2, 3, 1].sort((a, b) => a - b);
+        console.log(result);
+
+        const headTail = (head, ...tial) => [head, tial];
+
+        function foo(x) {
+            var y = 0;
+            console.log(x);
+            setTimeout(() => {
+                y = this.x + x;
+                console.log(y);
+            }, 1000);
+        }
+
+        console.log(foo.call({x: 42}, 1));
+    </script>
+</body>
+</html>
