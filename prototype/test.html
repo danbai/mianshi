@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function fun(...args) { // ...rest将传入的参数作为数组
+            var sum = 0;
+
+            for (var i = 0; i < args.length; i++) {
+                sum += args[i];
+            }
+
+            return sum;
+        }
+        console.log(fun(1, 2, 3));
+
+        console.log(...[1, 2, 3]);
+
+        function gun(x, y) {    // 扩展运算符,将一个数组转为用逗号分隔的参数序列
+            return x + y;
+        }
+
+        console.log(gun(...[1, 2]));
+
+        console.log(Math.max.apply(Math, [1, 3, 4]));
+        console.log(Math.max(...[1, 3, 4]));
+    </script>
+</body>
+</html>
