@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>bind</title>
+</head>
+<body>
+    <script>
+        /*
+        1.bind方法的主要作用是将函数绑定至某个对象.
+        当在函数f上调用bind()方法并传入一个对象o作为参数,这个方法将返回一个新的函数.
+        调用新的函数将会把原始的函数f()当做o的方法来调用.
+        传入新函数的任何实参都将传入原始函数.
+        */
+        'use strict';
+        var p = {
+            x: 1,
+            fun: function() {
+                return this.x;
+            },
+            gun: function() {
+                setTimeout(function() {
+                    console.log(this);  // setTimeout为全局方法,window.setTimeout,this总指向window
+                    console.log(this === window);
+                    console.log(this.x);
+                    return this.x;
+                }.bind(this), 1000);    // 这里的this在函数外部,指向调用对象
+            }
+        };
+
+        console.log(p.fun());
+        console.log(p.gun());
+
+        function f(y) {
+            return this.x + y;
+        }
+        var o = {
+            x: 1
+        };
+        var g = f.bind(o);
+        console.log(g(2));
+
+        function bind(f, o) {
+            if (f.bind) {
+                return f.bind(o);
+            } else {
+                return function() {
+                    f.apply(o, arguments);
+                }
+            }
+        }
+        var gg = bind(f, o);
+        console.log(gg(2));
+    </script>
+</body>
+</html>

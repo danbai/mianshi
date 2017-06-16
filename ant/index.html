@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>函数</title>
+</head>
+<body>
+    <script>
+        // 'use strict'; // this为undefined,严格模式下  非严格模式为undefined
+        console.log(fun(1, 2)());
+        var b = 10;
+        function fun(x, y) {
+            console.log(this); // window
+
+            function gun() {
+                var a = 3;
+                console.log(this);  // window
+                return x + y + a + b;
+            }
+
+            return gun;
+        }
+        console.log(fun(1, 2)());
+
+        function factorial(x) {
+            if (x > 1) {
+                return x * factorial(x -1);
+            } else {
+                return 1;
+            }
+        }
+        console.log(factorial(4));
+
+        var tensquared = (function(x) {
+            return x * x;
+        }(10));
+        console.log(tensquared);
+
+        var o = {
+            x: 1
+        };
+        o.m = function() {
+            return this.x;
+        }
+        console.log(o.m());
+
+        function fun2() {
+            return this.x;
+        }
+        console.log(fun2());
+        console.log(fun2.call(o));
+        /*
+        1.
+        */
+    </script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>reduce, reduceRight</title>
+</head>
+<body>
+    <script>
+        /*
+        1.reduce()和reduceRight()方法用指定的函数将数组元素进行组合,生成单个值.
+        这在函数式编程中是常见的操作,也可以称为'注入'和'折叠'.
+        2.reduce()需要两个参数,第一个是执行化简操作的函数,化简函数的任务就是用
+        某种方法把两个值组合或化简为一个值,并返回化简后的值.
+        在上述的例子中,函数通过加法,乘法或取最大值的方法组合两个值,第二个(可选)的参数
+        是一个传递给函数的初始值.
+        3.reduce()第一个参数是到目前为止的化简操作累积的结果,
+        4.reduceRight()的工作原理与reduce()一样,不同的是它按照数组索引从高到低处理数组,而不是从低到高.
+        */
+        var a = [1, 2, 3, 4, 5];
+        var sum = a.reduce(function(x, y) {
+            return x + y;
+        });
+        console.log(sum);
+        var product = a.reduce(function(x, y) {
+            return x * y;
+        });
+        console.log(product);
+        var max = a.reduce(function(x, y) {
+            return x > y ? x: y
+        });
+        console.log(max);
+        var b = [2, 3, 4];
+        var big = b.reduceRight(function(accumulator, value) {
+            return Math.pow(value, accumulator);
+        });
+        console.log(big);
+        var sub = a.reduce(function(x, y) {
+            return x - y;
+        });
+        var sub2 = a.reduceRight(function(x, y) {
+            return x - y;
+        });
+        console.log(sub);
+        console.log(sub2);
+        /*
+        1.union函数,他计算两个对象的并集,并返回另一个新对象,所以他的工作原理和一个化简函数一样.
+        并且可以使用reduce()来把它一般化,计算任意数目的对象的并集.
+        */
+        function extend(o, p) {
+            for (var i in p) {
+                o[i] = p[i];
+            }
+
+            return o;
+        }
+
+        function union(o, p) {
+            return extend(extend({}, o), p);
+        }
+
+        var objects = [
+            {x: 1},
+            {y: 2},
+            {z: 3}
+        ];
+        var merged = objects.reduce(function(o, p) {
+            for (var i in p) {
+                o[i] = p[i]
+            }
+
+            return o;
+        });
+        console.log(merged);
+
+        var objects2 = [
+            {x: 1, a: 1},
+            {y: 2, a: 2},
+            {z: 3, a: 3}
+        ];
+        var leftUnion = objects2.reduce(union);
+        console.log(leftUnion);
+        var rightUnion = objects2.reduceRight(union);
+        console.log(rightUnion);
+    </script>
+</body>
+</html>

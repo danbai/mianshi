@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>闭包</title>
+</head>
+<body>
+    <script>
+        // 'use strict';
+        /*
+        1.闭包(closure)是js语言的一个难点,也是它的特色,很多高级应用都要依靠闭包实现.
+        2.变量的作用域
+        要理解闭包,首先必须理解js特殊的变量作用域:全局变量和局部变量.
+        js语言的特殊支持,就在于函数内部可以直接读取全局变量.
+        另一方面,在函数外部自然无法读取函数内的局部变量.
+        函数内部声明变量的时候,一定要使用var命令,如果不用的话,你实际上声明了一个全局变量.
+        */
+        var n = 999;    // 999
+        function f1() {
+            console.log(n);
+            n = 1000; // 1000
+            console.log(n);
+            var m = 1;
+        }
+        f1();
+        console.log(n); // 1000
+        // console.log(m);
+        /*
+        3.如何从外部读取局部变量
+        出于种种原因,我们有时候需要得到函数内的局部变量,在函数的内部,再定义一个函数.
+        函数gun就被包括在函数fun内部,这时fun内部的所有局部变量,对gun都是可见的.
+        但是反过来就不行,gun内部的局部变量,对fun是不可见的.
+        这就是js语言特有的'链式作用域'结构(chain scope),子对象会一级一级的向上寻找
+        所有父对象的变量,所以,父对象的所有变量,对子对象都是可见的,反之则不成立.
+        */
+        function fun() {
+            var nn = 100;
+    
+            function gun() {
+                console.log(nn);
+            }
+
+            return gun;
+        }
+        fun()();
+        /*
+        4.闭包的概念
+        gun函数,就是闭包,闭包就是能够读取其他函数内部变量的函数.
+        由于在js中,只有在函数内部的子函数才能读取局部变量,才能读取局部变量,因此可以把闭包简单理解成'定义在一个函数内部的函数'.
+        所以,本质上,闭包是将函数内部和函数外部连接起来的一座桥梁.
+        5.闭包的用途
+        它的最大用处有两个,一个是前面提到的可以读取函数内部的变量,另一个就是让这些变量的值始终保持在内存中.
+        f1是f2的父函数,而f2被赋予了一个全局变量,这导致f2始终在内存中,而f2的存在依赖于f1,因此f1也始终在内存中,
+        不会在调用结束后,被垃圾回收机制回收.
+        */
+        function counter() {
+            var n = 0;
+            return {
+                counter: function() {
+                    console.log(n + '内部');
+                    return n++;
+                },
+                reset: function() {
+                    console.log(n + '内部');
+                    n = 0;
+                }
+            };
+        }
+        var c = counter();
+        console.log(c.counter());
+        console.log(c.counter());
+        c.reset();
+        console.log(c.counter());
+
+        var funcs = [];
+        for (var i = 0; i < 10; i++) {
+            funcs[i] = function() {
+                return i;
+            }
+        }
+        console.log(funcs[5]());
+
+        var funcs2 = [];
+        for (var i = 0; i < 10; i++) {
+            (function(i) {
+                funcs2[i] = function() {
+                    return i;
+                }
+            }(i));
+        }
+        console.log(funcs2[5]());
+        /*
+        5.使用闭包的注意点
+        由于闭包会使得函数中的变量都被保存在内存中,内存消耗很大,所以不能滥用闭包,否则会造成网页的性能问题,
+        在IE中可能导致内存泄露.解决方法是,在退出函数之前,将不使用的局部变量全部删除(赋值为null).
+        闭包会在父函数外部,改变父函数内部变量的值.所以,如果你把父函数当做对象(object)使用,把闭包当作它的公用方法,
+        把内部变量当作它的私有属性.
+        */
+        var scope = 1;
+        // delete scope;
+        console.log(scope);
+        var ooo = {
+            x: 1
+        };
+        // delete ooo.x;
+        console.log(ooo);
+
+        function fun2() {
+            var xxx = 1111;
+            // delete xxx;
+            console.log(xxx);
+        }
+        fun2();
+        /*
+        代码片段
+        */
+        /* var name = 'The Window';
+        var object = {
+            name: 'My Object',
+            getNameFunc: function() {
+                return function() {
+                    return this.name;
+                }
+            }
+        };
+        console.log(object.getNameFunc()());    // 非严格模式下this指向window */
+
+        var name = 'The Window';
+        var object = {
+            name: 'My Object',
+            getNameFunc: function() {
+                return function() {
+                    return this.name
+                }.bind(this)
+            }
+        };
+        console.log(object.getNameFunc()());    // this指向object
+    </script>
+</body>
+</html>

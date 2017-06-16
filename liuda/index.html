@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>行内元素,块状元素</title>
+    <style>
+        p {
+            font-size: 30px;
+            color: #00f;
+        }
+        .demo {
+            color: #00f;
+        }
+    </style>
+</head>
+<body>
+    <script>
+    /*
+    1.行内元素:<span> <a> <img> <b> <td>
+    块状元素:<table> <div> <p> <h1> <ul> <ol>
+    2.display:inherti block inline-block inline block
+    3.style放在body中优先级更高.
+    4.原始类型:Number(NaN),String,Boolean,null,undefined
+      对象类型:Object,Array,Function,Date,RegExp
+    5.Trident/IE内核  Gecko/Firefox内核  Webkit内核:chrome/safari/android/iphone safari  Presto/Opera内核
+    6.http响应码
+    1** 信息,服务器收到请求,需要请求者继续执行操作
+    2** 成功,操作被成功接收并处理
+    3** 重定向,需要进一步的操作以完成请求
+    4** 客户端错误,请求包含语法错误或无法完成请求
+    5** 服务器错误,服务器在处理请求的过程中发生了错误
+    200 OK 请求成功
+    304 not modified 所请求的资源未修改,服务器返回此状态码时,不会返回任何资源,
+    客户端通常会缓存访问过的资源
+    401 Unauthorized 请求要求用户的身份认证
+    403 Forbidden 服务器理解请求客户端的请求,但是拒绝此请求
+    404 Not Found 服务器无法根据客户端的请求找到资源
+    408 Request Timeout 服务端等待客户端发送的请求时间过长
+    502 Bad Gateway 充当网关或代理的服务器,从远端服务器接收到了一个无效的请求
+    505 Http Version not supported 服务器不支持请求的http协议的版本,无法完成处理
+    */
+    </script>
+    <style>
+        p {
+            color: #f00;
+        }
+    </style>
+    <p class="demo">demo</p>
+    <script>
+        var name = 'aaaa';
+
+        (function() {
+            if (typeof name === 'undefined') {
+                var name = 'bbbb';
+                console.log(name);
+            } else {
+                console.log(name);
+            }
+        }());
+        /*
+        eval(): 可计算某个字符串,并执行其中的js代码.
+        */
+        eval('var a = 1 + 2');
+        console.log(a);
+        /*
+        CDN:内容分发网络,将一个服务器的内容,平均分布到多个服务器上,服务器智能识别,让用户获取离用户最近的服务器,
+        提高访问速度.
+        缺点:缓存内容,如果服务器更新了内容,可能不会实时更新.
+        通过在网络各处放置节点服务器所构成的现有的互联网基础之上的一层智能虚拟网络,CDN系统能够实时的根据网络流量
+        和各节点的连接,负载状况以及到用户的距离和响应时间等综合信息将用户的请求重新导向离用户最近的服务节点上.
+        */
+    </script>
+</body>
+</html>

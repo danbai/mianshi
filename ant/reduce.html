@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>函数式编程</title>
+</head>
+<body>
+    <script>
+        /*
+        1.js并非函数式编程语言,但在js中可以像操控对象一样操控函数,也就是说可以在js中应用函数式编程技术.
+        map(),reduce()就可以非常适合用于函数式编程风格.
+        2.函数的柯里化
+        函数柯里化(curry)的定义很简单:传递给函数一部分参数来调用它,让它返回一个函数去处理剩下的参数.
+        */
+        var sum = function(x, y) {
+            return x + y;
+        }
+        var succ = sum.bind(null, 1);
+        console.log(succ(2));
+
+        function f(x, y) {
+            return this.a + x + y;
+        }
+        var g = f.bind({a: 1}, 2);
+        console.log(g(3));
+
+        var add = function(x) {
+            return function(y) {
+                return x + y;
+            }
+        }
+        var add2 = x => {
+            return y => {
+                return x + y
+            }
+        }
+        var add100 = add2(100);
+        console.log(add100(2));
+
+        var min = 18;
+        var checkage = age => {
+            return age > min;
+        }
+        var checkage2 = min => {
+            return age => {
+                return age > min;
+            }
+        }
+        var checkage22 = checkage2(22);
+        console.log(checkage22(21));
+        /*
+        1.事实上柯里化是一种'预加载'函数的方法,通过传递较少的参数,得到一个已经记住了这些参数
+        的新函数,某种意义上讲,这是一种对参数的'缓存',是一种非常高效的编写函数的方法.
+        */
+        var data = [1, 1, 3, 5, 5];
+        var sum = function(x, y) {
+            return x + y;
+        }
+        var square = function(x, y) {
+            return x * y;
+        }
+        var mean = data.reduce(sum) / data.length;
+        console.log(mean);
+        var deviations = data.map(function(item) {
+            return item - mean;
+        });
+        var stddev = Math.sqrt(deviations.map(square).reduce(sum));
+    </script>
+</body>
+</html>

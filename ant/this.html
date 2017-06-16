@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>this指向</title>
+</head>
+<body>
+    <script>
+        function fun() {
+            console.log(this);  // 非严格模式指向this
+            console.log(this === window);
+            this.b = 10;
+            var a = 1;
+            function gun() {
+                console.log(this);
+                console.log(this === window);
+                console.log(a);
+                a = 2;
+                console.log(a);
+            }
+            return gun();
+        }
+        fun();
+        console.log(b);
+
+        // 方法调用
+        var o = {
+            x: 1,
+            fun: function() {
+                console.log(this);
+                console.log(this === o);
+                return this.x;
+            }
+        };
+        console.log(o.fun());
+
+        // 用new关键字来新建一个函数对象的调用,this指向被绑定到构造函数的实力上
+        function F() {
+            this.x = 1;
+        }
+        F.prototype = {
+            constructor: F,
+            y: 10
+        };
+        var o = new F();
+        console.log(o);
+        console.log(o.x);
+        console.log(o.y);
+        var p = new F();
+        p.y = 100;
+        console.log(p);
+        console.log(o.y);
+    </script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>浏览器渲染</title>
+    <style>
+        .demo p {
+            color: #f00;
+        }
+
+        .demo > p {
+            font-size: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo">
+        <p>1111</p>
+        <div class="demo2">
+            <p>2222</p>
+        </div>
+    </div>
+    <script>
+        class A {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+            }
+            add() {
+                return this.x + this.y;
+            }
+        };
+        var o = new A(1, 2);
+        console.log(o);
+        console.log(o.add());
+        console.log(A); // class A {}
+        console.log(A.prototype);   // constrcutor() {},add() {}
+
+        // 实例对象的__proto__指向原型的prototype属性
+        console.log(o.__proto__);
+        console.log(o.__proto__ === A.prototype);   // true
+
+        class B extends A {};
+        console.log(B.prototype);   // A{}
+        console.log(B.__proto__);   // class A
+    </script>
+</body>
+</html>

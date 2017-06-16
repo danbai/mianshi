@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>call,apply,bind</title>
+</head>
+<body>
+    <script>
+        console.log(Object.prototype.toString.call([]));
+        console.log(Object.prototype.toString.call({}));
+
+        var o = {
+            x: 1
+        };
+        function fun(a, b) {
+            return this.x + a + b;
+        }
+        // 第一个实参的值都会变为this的值
+        console.log(fun(1, 2));
+        console.log(fun.call(o, 1, 2));
+        console.log(fun.apply(o, [1, 2]));
+        console.log(Math.max.apply(Math, [1, 2, 3]));
+
+        function trace(o, m) {
+            var original = o[m];
+            o[m] = function() {
+                console.log(new Date(), 'Entering:', m);
+                console.log(this);
+                var result = original.apply(this, arguments);
+                console.log(new Date(), 'Exiting:', m);
+                return result;
+            }
+        }
+        var o = {
+            x: 1,
+            m: function(a, b) {
+                return this.x + a + b;
+            }
+        }
+        trace(o, 'm');
+        console.log(o);
+        console.log(o.m(2, 3));
+    </script>
+</body>
+</html>

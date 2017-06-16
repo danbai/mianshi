@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>利用闭包实现的私有属性存取器方法</title>
+</head>
+<body>
+    <script>
+        function addPrivateProperty(o, name, predicate) {
+            var value;
+
+            o['get' + name] = function() {
+                return value;
+            }
+
+            o['set' + name] = function(v) {
+                if (predicate && !predicate(v)) {
+                    throw Error('set' + name + ': invalid value ' + v);
+                } else {
+                    value = v;
+                }
+            }
+        }
+
+        var o = {};
+        addPrivateProperty(o, 'Name', function(x) {
+            return typeof x === 'string';
+        });
+        o.setName('Frank');
+        console.log(o.getName());
+        /*
+        1.在同一个作用域中定义两个闭包,这两个闭包共享同样的私有变量或变量.
+        */
+        function constfunc(v) {
+            console.log(this);
+            console.log(this === window);
+            return function() {
+                console.log(this);
+                console.log(this === window);
+                return v;
+            }
+        }
+        var funcs = [];
+        for (var i = 0; i < 10; i++) {
+            funcs[i] = constfunc(i);
+        }
+        console.log(funcs);
+        console.log(funcs[5]());    // 5
+
+        var funcs2 = [];
+        for (var i = 0; i < 10; i++) {
+            (function(i) {  // 每个函数创建一个闭包,不共享变量i
+                funcs2[i] = function() {
+                    return i;
+                }
+            }(i));
+        }
+        console.log(funcs2);
+        console.log(funcs2[5]());    // 5
+
+        function constfuncs() { // 同一个函数调用创建闭包,共享变量i
+            var funcss = [];
+            for (var i = 0; i < 10; i++) {
+                funcss[i] = function() {
+                    return i;
+                }
+            }
+            return funcss;
+        }
+        var funcss = constfuncs();
+        console.log(funcss);
+        console.log(funcss[5]());
+        /*
+        1.上面代码创建了10个闭包,并将他们存储到一个数组中,这些闭包都是在同一个函数调用中定义的,
+        因此他们可以共享变量i.
+        */
+    </script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>原型继承</title>
+</head>
+<body>
+    <script>
+        // 构造函数,类
+        function F(a, b) {  // 构造函数初始化this
+            this.a = a;
+            this.b = b; // new实例对象,this指向实例对象
+        }
+        F.prototype = { // 原型对象,实例对象继承属性
+            constructor: F,
+            add: function() {
+                console.log(this);
+                return this.a + this.b;
+            },
+            a: 3,
+            x: 4
+        };
+
+        var o = new F(1, 2);
+        console.log(o.a);   // 1,自身属性,没有再往上层类找
+        console.log(o.b);
+        console.log(o.constructor === F);
+        console.log(F.prototype.constructor === F);
+        console.log(o.add());
+
+        function inherit(p) {
+            if (p == null) {
+                throw TypeError();
+            }
+            if (Object.create) {
+                return Object.create(p);
+            }
+            var t = typeof(p);
+            if (t !== 'object' && t !== 'function') {
+                throw TypeError();
+            }
+            function F() {};
+            F.prototype = p;
+            return new F();
+        }
+
+        function FF(a, b) {
+            this.a = a * a;
+            this.b = b * b;
+        }
+        FF.prototype = inherit(F.prototype);
+        FF.prototype.constructor = FF;
+        var p = new FF(1, 2);
+        console.log(p);
+        console.log(p.add());
+        console.log(FF.prototype === F.prototype);
+
+        // ES6 class
+        class Point {
+            constructor(x, y) {
+                this.x = x; // this指代实例对象
+                this.y = y;
+            }
+            toString() {
+                return '(' + this.x + ', ' + this.y + ')';
+            }
+        }
+        Point.prototype.zz = 22;
+        var ppp = new Point(1, 2);
+        console.log(ppp.toString());
+        console.log(ppp.zz);
+        console.log(ppp.constructor === Point);
+        console.log(Point.prototype);
+        console.log(Point.prototype.constructor === Point);
+        console.log(ppp.__proto__ === Point.prototype); // true,实例对象的__proto__属性指向类的prototype属性
+
+        class B extends Point {
+            constructor(x, y, color) {
+                super(x, y);    // super指代父类的实例,即父类的this对象
+                this.color = color;
+            }
+            toString() {
+                return super.toString() + ', ' + this.color
+            }
+        }
+        var pppp = new B(1, 2, 'red');
+        console.log(pppp.toString());
+        console.log(pppp.__proto__ === ppp.__proto__);
+        console.log(B.prototype === Point.prototype);
+
+        console.log(pppp instanceof B);
+        console.log(pppp instanceof Point);
+
+        console.log(B.__proto__ === Point);
+        console.log(B.prototype.__proto__ === Point.prototype);
+
+        console.log(pppp.__proto__ === B.prototype);
+    </script>
+</body>
+</html>
