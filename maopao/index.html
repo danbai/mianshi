@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js原生事件</title>
+    <style>
+        .a {
+            width: 200px;
+            height: 200px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="a">
+        <button id="btn">button</button>
+    </div>
+    <script>
+        window.onload = function() {
+            document.querySelector('.a').onclick = function(e) {
+                console.log('a:' + e.target);
+            }
+            document.querySelector('#btn').onclick = function(e) {
+                console.log('btn:' + e.target);
+            }
+        }
+    </script>
+</body>
+</html>
